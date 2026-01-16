@@ -162,6 +162,10 @@ public class ProjectSourcesGoal
                 final File destFile = archiver.createArchive(assembly, fullName, format, configSourceForArchive, null);
 
                 final MavenProject project = getProject();
+
+                getLog().info(
+                        "Attaching " + assembly.getId() + " with file " + destFile.getName() + " to "
+                                + project.getArtifactId());
                 projectHelper.attachArtifact(project, format, assembly.getId(), destFile);
             }
         } catch (final ArchiveCreationException | AssemblyFormattingException e) {
