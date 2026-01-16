@@ -25,7 +25,7 @@
   <packaging>pom</packaging>
 
   <name>test-project</name>
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,7 +34,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.commonjava.maven.plugins</groupId>
+        <groupId>org.jboss.pnc</groupId>
         <artifactId>project-sources-maven-plugin</artifactId>
         <version>${testVersion}</version>
         <executions>
