@@ -40,7 +40,6 @@
     <projectOwner>Red Hat, Inc.</projectOwner>
     <javaVersion>1.8</javaVersion>
     <javaTestVersion>${javaVersion}</javaTestVersion>
-<!--    <enforcer.skip>true</enforcer.skip>-->
 
     <mavenVersion>3.9.11</mavenVersion>
   </properties>
@@ -62,8 +61,7 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.0.3</version>
-<!--        <version>${maven.version}</version>-->
+        <version>${mavenVersion}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -90,23 +88,18 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-<!--      <version>3.2</version>-->
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
-<!--      <version>3.0.3</version>-->
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-<!--      <version>4.13.1</version>-->
-<!--      <scope>test</scope>-->
     </dependency>
   </dependencies>
 
@@ -121,31 +114,6 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-<!--          <version>2.4</version>-->
-          <configuration>
-            <archive>
-              <index>true</index>
-              <manifest>
-                <addDefaultSpecificationEntries>
-                  true
-                </addDefaultSpecificationEntries>
-                <addDefaultImplementationEntries>
-                  true
-                </addDefaultImplementationEntries>
-              </manifest>
-              <manifestEntries>
-                <Implementation-URL>${project.url}</Implementation-URL>
-                <Java-Version>${java.version}</Java-Version>
-                <Java-Vendor>${java.vendor}</Java-Vendor>
-                <Os-Name>${os.name}</Os-Name>
-                <Os-Arch>${os.arch}</Os-Arch>
-                <Os-Version>${os.version}</Os-Version>
-                <Scm-Url>${project.scm.url}</Scm-Url>
-                <Scm-Connection>${project.scm.connection}</Scm-Connection>
-                <Scm-Revision>${buildNumber}</Scm-Revision>
-              </manifestEntries>
-            </archive>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -156,51 +124,6 @@
             <detectJavaApiLink>true</detectJavaApiLink>
             <author>false</author>
           </configuration>
-        </plugin>
-<!--        <plugin>-->
-<!--          <artifactId>maven-compiler-plugin</artifactId>-->
-<!--          <configuration>-->
-<!--            <debug>true</debug>-->
-<!--            <source>1.6</source>-->
-<!--            <target>1.6</target>-->
-<!--          </configuration>-->
-<!--        </plugin>-->
-        <plugin>
-          <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.9.1</version>
-          <executions>
-            <execution>
-              <id>integration-test</id>
-              <goals>
-                <goal>install</goal>
-                <goal>integration-test</goal>
-                <goal>verify</goal>
-              </goals>
-            </execution>
-          </executions>
-              <configuration>
-                <properties>
-                  <testVersion>${project.version}</testVersion>
-                </properties>
-                <debug>true</debug>
-                <goals>
-                  <goal>clean</goal>
-                  <goal>package</goal>
-                  <goal>install</goal>
-                </goals>
-                <!-- <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo> -->
-                <localRepositoryPath>${localRepositoryUrl}</localRepositoryPath>
-                <!-- mavenExecutable>mvnDebug</mavenExecutable -->
-                <pomIncludes>
-                    <!-- <pomInclude>remote-plugin-management-invalid/pom.xml</pomInclude> -->
-                    <pomInclude>*/pom.xml</pomInclude>
-                </pomIncludes>
-                <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                <cloneClean>true</cloneClean>
-                <postBuildHookScript>verify</postBuildHookScript>
-                <settingsFile>src/it/settings.xml</settingsFile>
-                <addTestClassPath>true</addTestClassPath>
-              </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -218,6 +141,40 @@
         <plugins>
           <plugin>
             <artifactId>maven-invoker-plugin</artifactId>
+            <version>3.9.1</version>
+            <executions>
+              <execution>
+                <id>integration-test</id>
+                <goals>
+                  <goal>install</goal>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <properties>
+                <testVersion>${project.version}</testVersion>
+              </properties>
+              <debug>true</debug>
+              <goals>
+                <goal>clean</goal>
+                <goal>package</goal>
+                <goal>install</goal>
+              </goals>
+              <!-- <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo> -->
+              <localRepositoryPath>${localRepositoryUrl}</localRepositoryPath>
+              <!-- mavenExecutable>mvnDebug</mavenExecutable -->
+              <pomIncludes>
+                <!-- <pomInclude>remote-plugin-management-invalid/pom.xml</pomInclude> -->
+                <pomInclude>*/pom.xml</pomInclude>
+              </pomIncludes>
+              <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+              <cloneClean>true</cloneClean>
+              <postBuildHookScript>verify</postBuildHookScript>
+              <settingsFile>src/it/settings.xml</settingsFile>
+              <addTestClassPath>true</addTestClassPath>
+            </configuration>
           </plugin>
         </plugins>
       </build>
