@@ -1,6 +1,5 @@
 package org.jboss.pnc.projectsrcplugin;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 
 import java.io.File;
@@ -56,70 +55,70 @@ public class ProjectSourcesGoal
     private static final String CLASSIFIER = "project-sources";
 
     @Inject
-    protected AssemblyArchiver archiver;
+    private AssemblyArchiver archiver;
 
     @Inject
-    protected AssemblyReader reader;
+    private AssemblyReader reader;
 
     /**
      * Maven ProjectHelper.
      */
     @Inject
-    protected MavenProjectHelper projectHelper;
+    private MavenProjectHelper projectHelper;
 
     /**
      * Maven shared filtering utility.
      */
     @Inject
-    protected MavenFileFilter mavenFileFilter;
+    private MavenFileFilter mavenFileFilter;
 
     /**
      * The Maven Session Object
      */
     @Inject
-    protected MavenSession mavenSession;
+    private MavenSession mavenSession;
 
     @Parameter(defaultValue = "${basedir}", required = true, readonly = true)
-    protected File basedir;
+    private File basedir;
 
     @Parameter(defaultValue = "${project.build.finalName}", required = true, readonly = true)
-    protected String assemblyRootFolder;
+    private String assemblyRootFolder;
 
     @Parameter(defaultValue = "${reactorProjects}", required = true, readonly = true)
-    protected List<MavenProject> reactorProjects;
+    private List<MavenProject> reactorProjects;
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
-    protected MavenProject project;
+    private MavenProject project;
 
     /**
      * Temporary directory that contain the files to be assembled.
      */
     @Parameter(defaultValue = "${project.build.directory}/projectsrc-archive-tmp", required = true, readonly = true)
-    protected File tempRoot;
+    private File tempRoot;
 
     /**
      * Directory to unpack JARs into if needed
      */
     @Parameter(defaultValue = "${project.build.directory}/projectsrc-work", required = true)
-    protected File workDirectory;
+    private File workDirectory;
 
     /**
      * The output directory of the assembled distribution file.
      */
     @Parameter(defaultValue = "${project.build.directory}", required = true, readonly = true)
-    protected File outputDirectory;
+    private File outputDirectory;
 
     /**
      * The filename of the assembled distribution file.
      */
     @Parameter(defaultValue = "${project.build.finalName}", required = true, readonly = true)
-    protected String finalName;
+    private String finalName;
 
     /**
      * When set to 'true' the project-sources.zip will NOT be produced during the build.
      */
     @Parameter(property = "project.src.skip")
-    protected boolean skipProjectSources;
+    private boolean skipProjectSources;
 
     /**
      * Allow to specify formats to be generated. Default value is "tar.gz". Please follow link below for list of
@@ -130,10 +129,7 @@ public class ProjectSourcesGoal
      *
      */
     @Parameter(property = "formats", defaultValue = "tar.gz")
-    protected String formats;
-
-    protected ProjectSourcesGoal() {
-    }
+    private String formats;
 
     @Override
     public void execute()
@@ -165,9 +161,7 @@ public class ProjectSourcesGoal
                 final MavenProject project = getProject();
                 projectHelper.attachArtifact(project, format, assembly.getId(), destFile);
             }
-        } catch (final ArchiveCreationException e) {
-            throw new MojoExecutionException("Failed to create assembly: " + e.getMessage(), e);
-        } catch (final AssemblyFormattingException e) {
+        } catch (final ArchiveCreationException | AssemblyFormattingException e) {
             throw new MojoExecutionException("Failed to create assembly: " + e.getMessage(), e);
         } catch (final InvalidAssemblerConfigurationException e) {
             throw new MojoFailureException(
@@ -179,11 +173,10 @@ public class ProjectSourcesGoal
     }
 
     static List<String> getAssemblyFormats(String formats) {
-        List<String> parsedList = asList(formats.split(","));
-        List<String> list = new ArrayList<String>();
-        int size = parsedList.size();
-        for (int i = 0; i < size; i++) {
-            list.add(parsedList.get(i).trim());
+        String[] parsedList = formats.split(",");
+        List<String> list = new ArrayList<>();
+        for (String s : parsedList) {
+            list.add(s.trim());
         }
         return unmodifiableList(list);
     }
@@ -383,7 +376,7 @@ public class ProjectSourcesGoal
     /**
      * Returns true if the current project is located at the Execution Root Directory (where mvn was launched)
      *
-     * @return
+     * @return true if execution root
      */
     private boolean isThisTheExecutionRoot() {
         final Log log = getLog();
