@@ -1,18 +1,16 @@
 import org.codehaus.plexus.archiver.tar.TarGZipUnArchiver
-import org.codehaus.plexus.logging.Logger
-import org.codehaus.plexus.logging.console.ConsoleLogger
 import groovy.xml.XmlSlurper
 
 def project = new XmlSlurper().parseText( new File(basedir, "pom.xml").getText() )
 def version = project.parent.version
 
-assert new File( basedir, "target/${project.artifactId}-${version}-project-sources.tar.gz" ).exists();
+assert new File( basedir, "target/${project.artifactId}-${version}-project-sources.tar.gz" ).exists()
 
 def parentProject = new XmlSlurper().parseText( new File(basedir, "parent/pom.xml").getText() )
-assert !new File( basedir, "parent/target/${parentProject.artifactId}-${version}-project-sources.tar.gz" ).exists();
+assert !new File( basedir, "parent/target/${parentProject.artifactId}-${version}-project-sources.tar.gz" ).exists()
 
 def childProject = new XmlSlurper().parseText( new File(basedir, "child/pom.xml").getText() )
-assert !new File( basedir, "child/target/${childProject.artifactId}-${version}-project-sources.tar.gz" ).exists();
+assert !new File( basedir, "child/target/${childProject.artifactId}-${version}-project-sources.tar.gz" ).exists()
 
 def groupPath = project.parent.groupId
 
@@ -27,14 +25,13 @@ if ( !tgz.exists() ){
     return false
 }
 
-final TarGZipUnArchiver ua = new TarGZipUnArchiver( tgz );
-ua.enableLogging( new ConsoleLogger(Logger.LEVEL_DEBUG, "verify") );
-destDir.mkdirs();
-ua.setDestDirectory(destDir);
-ua.extract();
+final TarGZipUnArchiver ua = new TarGZipUnArchiver( tgz )
+destDir.mkdirs()
+ua.setDestDirectory(destDir)
+ua.extract()
 
 def root = "${project.artifactId}-${version}"
-File rootDir = new File( destDir, root );
+File rootDir = new File( destDir, root )
 
 def filesPresent = [
     "parent/pom.xml",
@@ -45,16 +42,16 @@ def filesPresent = [
     "verify.groovy"
     ]
 
-boolean missing = false;
+boolean missing = false
 filesPresent.each {
     if ( !new File( rootDir, it ).exists() )
     {
         System.out.println("${it} not present in archive!")
-        missing = true;
+        missing = true
     }
 }
 if (missing) {
-    return false;
+    return false
 }
 
 def filesMissing = [
@@ -64,16 +61,16 @@ def filesMissing = [
     "src/test/java/.svn/entries"
     ]
 
-boolean present = false;
+boolean present = false
 filesMissing.each{
     if ( new File( rootDir, it ).exists() )
     {
         System.out.println("${it} is present in archive, but should not be!")
-        present = true;
+        present = true
     }
 }
 if (present) {
-    return false;
+    return false
 }
 
 return true

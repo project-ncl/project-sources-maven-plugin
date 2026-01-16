@@ -4,33 +4,36 @@ import static java.util.Collections.unmodifiableList;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import javax.inject.Inject;
 
 import org.apache.maven.archiver.MavenArchiveConfiguration;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.assembly.AssemblerConfigurationSource;
-import org.apache.maven.plugin.assembly.InvalidAssemblerConfigurationException;
-import org.apache.maven.plugin.assembly.archive.ArchiveCreationException;
-import org.apache.maven.plugin.assembly.archive.AssemblyArchiver;
-import org.apache.maven.plugin.assembly.format.AssemblyFormattingException;
-import org.apache.maven.plugin.assembly.io.AssemblyReadException;
-import org.apache.maven.plugin.assembly.io.AssemblyReader;
-import org.apache.maven.plugin.assembly.model.Assembly;
-import org.apache.maven.plugin.assembly.utils.AssemblyFormatUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.plugins.assembly.AssemblerConfigurationSource;
+import org.apache.maven.plugins.assembly.InvalidAssemblerConfigurationException;
+import org.apache.maven.plugins.assembly.archive.ArchiveCreationException;
+import org.apache.maven.plugins.assembly.archive.AssemblyArchiver;
+import org.apache.maven.plugins.assembly.format.AssemblyFormattingException;
+import org.apache.maven.plugins.assembly.io.AssemblyReadException;
+import org.apache.maven.plugins.assembly.io.AssemblyReader;
+import org.apache.maven.plugins.assembly.model.Assembly;
+import org.apache.maven.plugins.assembly.utils.AssemblyFormatUtils;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.apache.maven.shared.filtering.MavenFileFilter;
+import org.apache.maven.shared.filtering.MavenReaderFilter;
+import org.codehaus.plexus.interpolation.fixed.FixedStringSearchInterpolator;
 
 /**
  * Goal that wraps an invocation of the <code>project</code> built-in assembly descriptor (in the assembly plugin). This
@@ -156,7 +159,7 @@ public class ProjectSourcesGoal
                     ? createConfigSourceForArchive(this)
                     : this;
             for (final String format : assembly.getFormats()) {
-                final File destFile = archiver.createArchive(assembly, fullName, format, configSourceForArchive, true);
+                final File destFile = archiver.createArchive(assembly, fullName, format, configSourceForArchive, null);
 
                 final MavenProject project = getProject();
                 projectHelper.attachArtifact(project, format, assembly.getId(), destFile);
@@ -185,16 +188,6 @@ public class ProjectSourcesGoal
         return new AssemblerConfigurationSource() {
 
             @Override
-            public String getDescriptor() {
-                return other.getDescriptor();
-            }
-
-            @Override
-            public String getDescriptorId() {
-                return other.getDescriptorId();
-            }
-
-            @Override
             public String[] getDescriptors() {
                 return other.getDescriptors();
             }
@@ -220,11 +213,6 @@ public class ProjectSourcesGoal
             }
 
             @Override
-            public boolean isSiteIncluded() {
-                return other.isSiteIncluded();
-            }
-
-            @Override
             public File getSiteDirectory() {
                 return other.getSiteDirectory();
             }
@@ -237,11 +225,6 @@ public class ProjectSourcesGoal
             @Override
             public boolean isAssemblyIdAppended() {
                 return other.isAssemblyIdAppended();
-            }
-
-            @Override
-            public String getClassifier() {
-                return other.getClassifier();
             }
 
             @Override
@@ -265,11 +248,6 @@ public class ProjectSourcesGoal
             }
 
             @Override
-            public ArtifactRepository getLocalRepository() {
-                return other.getLocalRepository();
-            }
-
-            @Override
             public File getTemporaryRootDirectory() {
                 return other.getTemporaryRootDirectory();
             }
@@ -287,11 +265,6 @@ public class ProjectSourcesGoal
             @Override
             public List<MavenProject> getReactorProjects() {
                 return other.getReactorProjects();
-            }
-
-            @Override
-            public List<ArtifactRepository> getRemoteRepositories() {
-                return other.getRemoteRepositories();
             }
 
             @Override
@@ -320,18 +293,8 @@ public class ProjectSourcesGoal
             }
 
             @Override
-            public MavenFileFilter getMavenFileFilter() {
-                return other.getMavenFileFilter();
-            }
-
-            @Override
             public boolean isUpdateOnly() {
                 return other.isUpdateOnly();
-            }
-
-            @Override
-            public boolean isUseJvmChmod() {
-                return other.isUseJvmChmod();
             }
 
             @Override
@@ -347,6 +310,81 @@ public class ProjectSourcesGoal
             @Override
             public String getEscapeString() {
                 return other.getEscapeString();
+            }
+
+            @Override
+            public MavenReaderFilter getMavenReaderFilter() {
+                return other.getMavenReaderFilter();
+            }
+
+            @Override
+            public List<Assembly> getInlineDescriptors() {
+                return other.getInlineDescriptors();
+            }
+
+            @Override
+            public List<String> getDelimiters() {
+                return other.getDelimiters();
+            }
+
+            @Override
+            public FixedStringSearchInterpolator getRepositoryInterpolator() {
+                return other.getRepositoryInterpolator();
+            }
+
+            @Override
+            public FixedStringSearchInterpolator getCommandLinePropsInterpolator() {
+                return other.getCommandLinePropsInterpolator();
+            }
+
+            @Override
+            public FixedStringSearchInterpolator getEnvInterpolator() {
+                return other.getEnvInterpolator();
+            }
+
+            @Override
+            public FixedStringSearchInterpolator getMainProjectInterpolator() {
+                return other.getMainProjectInterpolator();
+            }
+
+            @Override
+            public Integer getOverrideUid() {
+                return other.getOverrideUid();
+            }
+
+            @Override
+            public String getOverrideUserName() {
+                return other.getOverrideUserName();
+            }
+
+            @Override
+            public Integer getOverrideGid() {
+                return other.getOverrideGid();
+            }
+
+            @Override
+            public String getOverrideGroupName() {
+                return other.getOverrideGroupName();
+            }
+
+            @Override
+            public boolean isRecompressZippedFiles() {
+                return other.isRecompressZippedFiles();
+            }
+
+            @Override
+            public String getMergeManifestMode() {
+                return other.getMergeManifestMode();
+            }
+
+            @Override
+            public Properties getAdditionalProperties() {
+                return other.getAdditionalProperties();
+            }
+
+            @Override
+            public boolean isIncludeProjectBuildFilters() {
+                return other.isIncludeProjectBuildFilters();
             }
         };
     }
@@ -404,28 +442,23 @@ public class ProjectSourcesGoal
     }
 
     @Override
+    public MavenReaderFilter getMavenReaderFilter() {
+        return null;
+    }
+
+    @Override
     public File getBasedir() {
         return basedir;
     }
 
     @Override
-    public String getClassifier() {
-        return null;
-    }
-
-    @Override
-    public String getDescriptor() {
-        return null;
-    }
-
-    @Override
-    public String getDescriptorId() {
-        return null;
-    }
-
-    @Override
     public String[] getDescriptorReferences() {
         return new String[] { PROJECT_DESCRIPTOR };
+    }
+
+    @Override
+    public List<Assembly> getInlineDescriptors() {
+        return Collections.emptyList();
     }
 
     @Override
@@ -449,8 +482,73 @@ public class ProjectSourcesGoal
     }
 
     @Override
+    public List<String> getDelimiters() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public FixedStringSearchInterpolator getRepositoryInterpolator() {
+        return FixedStringSearchInterpolator.empty();
+    }
+
+    @Override
+    public FixedStringSearchInterpolator getCommandLinePropsInterpolator() {
+        return FixedStringSearchInterpolator.empty();
+    }
+
+    @Override
+    public FixedStringSearchInterpolator getEnvInterpolator() {
+        return FixedStringSearchInterpolator.empty();
+    }
+
+    @Override
+    public FixedStringSearchInterpolator getMainProjectInterpolator() {
+        return FixedStringSearchInterpolator.empty();
+    }
+
+    @Override
+    public Integer getOverrideUid() {
+        return 0;
+    }
+
+    @Override
+    public String getOverrideUserName() {
+        return "";
+    }
+
+    @Override
+    public Integer getOverrideGid() {
+        return 0;
+    }
+
+    @Override
+    public String getOverrideGroupName() {
+        return "";
+    }
+
+    @Override
+    public boolean isRecompressZippedFiles() {
+        return false;
+    }
+
+    @Override
+    public String getMergeManifestMode() {
+        return "";
+    }
+
+    @Override
     public List<String> getFilters() {
         return null;
+    }
+
+    @Override
+    public Properties getAdditionalProperties() {
+        return new Properties();
+    }
+
+    @Override
+    public boolean isIncludeProjectBuildFilters() {
+        return false;
     }
 
     @Override
@@ -461,16 +559,6 @@ public class ProjectSourcesGoal
     @Override
     public MavenArchiveConfiguration getJarArchiveConfiguration() {
         return null;
-    }
-
-    @Override
-    public ArtifactRepository getLocalRepository() {
-        return mavenSession.getLocalRepository();
-    }
-
-    @Override
-    public MavenFileFilter getMavenFileFilter() {
-        return mavenFileFilter;
     }
 
     @Override
@@ -491,12 +579,6 @@ public class ProjectSourcesGoal
     @Override
     public List<MavenProject> getReactorProjects() {
         return reactorProjects;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<ArtifactRepository> getRemoteRepositories() {
-        return project.getRemoteArtifactRepositories();
     }
 
     @Override
@@ -545,18 +627,8 @@ public class ProjectSourcesGoal
     }
 
     @Override
-    public boolean isSiteIncluded() {
-        return false;
-    }
-
-    @Override
     public boolean isUpdateOnly() {
         return false;
-    }
-
-    @Override
-    public boolean isUseJvmChmod() {
-        return true;
     }
 
     private boolean assemblyRootFolderNameDiffersFromFinalName() {

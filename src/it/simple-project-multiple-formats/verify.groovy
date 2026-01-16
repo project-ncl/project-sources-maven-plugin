@@ -13,10 +13,9 @@ if ( groupPath == null ){
 
 groupPath = groupPath.toString().replace('.', '/')
 
-assert new File( basedir, "target/${project.artifactId}-${version}-project-sources.tar.gz" ).exists();
+assert new File( basedir, "target/${project.artifactId}-${version}-project-sources.tar.gz" ).exists()
 
 File dir = new File( localRepositoryPath, "${groupPath}/${project.artifactId}/${version}" )
-File destDir = new File( basedir, "target")
 
 File tgzFile = new File( dir, "${project.artifactId}-${version}-project-sources.tar.gz")
 
