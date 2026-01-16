@@ -27,7 +27,7 @@
 
   <groupId>org.jboss.pnc</groupId>
   <artifactId>project-sources-maven-plugin</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0</version>
   <packaging>maven-plugin</packaging>
 
   <name>Project Sources Maven Plugin</name>
@@ -47,8 +47,8 @@
   <developers>
     <developer>
       <id>jdcasey</id>
-      <email>jdcasey@commonjava.org</email>
       <name>John Casey</name>
+      <email>jdcasey@commonjava.org</email>
     </developer>
     <developer>
       <id>rnc</id>
@@ -60,7 +60,7 @@
   <scm>
     <connection>scm:git:https://github.com/project-ncl/project-sources-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:project-ncl/project-sources-maven-plugin.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>project-sources-maven-plugin-2.0</tag>
     <url>https://github.com/project-ncl/project-sources-maven-plugin</url>
   </scm>
 
