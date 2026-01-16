@@ -13,7 +13,7 @@ As of the 1.0 release, this plugin includes a `META-INF/m2e/lifecycle-mapping-me
 It's a pretty simple configuration:
 
     <plugin>
-      <groupId>org.commonjava.maven.plugins</groupId>
+      <groupId>org.jboss.pnc</groupId>
       <artifactId>project-sources-maven-plugin</artifactId>
       <version>${projectSrcVersion}</version>
       <executions>
@@ -35,7 +35,7 @@ If you find that you need to disable this plugin for a specific build, you can u
 To create source archive with root folder myFolderName
 
     <plugin>
-      <groupId>org.commonjava.maven.plugins</groupId>
+      <groupId>org.jboss.pnc</groupId>
       <artifactId>project-sources-maven-plugin</artifactId>
       <version>${projectSrcVersion}</version>
       <executions>
@@ -59,7 +59,7 @@ Formats are comma separated.
 Eg. to generate tar.gz and zip format
 
     <plugin>
-      <groupId>org.commonjava.maven.plugins</groupId>
+      <groupId>org.jboss.pnc</groupId>
       <artifactId>project-sources-maven-plugin</artifactId>
       <version>${projectSrcVersion}</version>
       <executions>
