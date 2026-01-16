@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2012 Red Hat, Inc. (jdcasey@commonjava.org)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.jboss.pnc.projectsrcplugin;
 
 import static java.util.Arrays.asList;
@@ -21,6 +6,8 @@ import static java.util.Collections.unmodifiableList;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.apache.maven.archiver.MavenArchiveConfiguration;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -38,7 +25,6 @@ import org.apache.maven.plugin.assembly.io.AssemblyReader;
 import org.apache.maven.plugin.assembly.model.Assembly;
 import org.apache.maven.plugin.assembly.utils.AssemblyFormatUtils;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -54,14 +40,13 @@ import org.apache.maven.shared.filtering.MavenFileFilter;
  * injected via tooling with minimal
  * risk of collision).
  */
-/* @formatter:off */
-@Mojo( name = "archive",
+@Mojo(
+        name = "archive",
         requiresDependencyResolution = ResolutionScope.NONE,
         requiresDependencyCollection = ResolutionScope.NONE,
         requiresOnline = false,
         requiresProject = true,
-        defaultPhase = LifecyclePhase.INITIALIZE )
-/* @formatter:on */
+        defaultPhase = LifecyclePhase.INITIALIZE)
 public class ProjectSourcesGoal
         extends AbstractMojo
         implements AssemblerConfigurationSource {
@@ -70,28 +55,28 @@ public class ProjectSourcesGoal
 
     private static final String CLASSIFIER = "project-sources";
 
-    @Component
+    @Inject
     protected AssemblyArchiver archiver;
 
-    @Component
+    @Inject
     protected AssemblyReader reader;
 
     /**
      * Maven ProjectHelper.
      */
-    @Component
+    @Inject
     protected MavenProjectHelper projectHelper;
 
     /**
      * Maven shared filtering utility.
      */
-    @Component
+    @Inject
     protected MavenFileFilter mavenFileFilter;
 
     /**
      * The Maven Session Object
      */
-    @Component
+    @Inject
     protected MavenSession mavenSession;
 
     @Parameter(defaultValue = "${basedir}", required = true, readonly = true)
@@ -139,7 +124,7 @@ public class ProjectSourcesGoal
     /**
      * Allow to specify formats to be generated. Default value is "tar.gz". Please follow link below for list of
      * possible values
-     * 
+     *
      * @see <a href=
      *      "https://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html#formats">https://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html#formats</a>
      *
