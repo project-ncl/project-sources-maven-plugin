@@ -1,0 +1,23 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+permissions: {}
+
+on:
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+    call-maven-ci:
+      uses: project-ncl/shared-github-actions/.github/workflows/maven-ci.yml@f7041589cc1ce5e75564bda958cc6e5182c240cd # v0.0.15
+      with:
+        java_version: 17
+        build_command: 'mvn -B -V clean install -Prun-its'
+
