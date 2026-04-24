@@ -20,9 +20,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.redhat.rcm</groupId>
-    <artifactId>redhat-releng-tools</artifactId>
-    <version>13</version>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-parent</artifactId>
+    <version>53</version>
   </parent>
 
   <groupId>org.jboss.pnc</groupId>
@@ -69,6 +69,7 @@
     <javaVersion>1.8</javaVersion>
     <javaTestVersion>${javaVersion}</javaTestVersion>
 
+    <jdk.min.version>8</jdk.min.version>
     <mavenVersion>3.9.14</mavenVersion>
     <it.maven.home>${project.build.directory}/apache-maven-</it.maven.home>
     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
@@ -168,7 +169,7 @@
             </sortPom>
           </pom>
           <java>
-            <removeUnusedImports />
+            <removeUnusedImports/>
             <importOrder>
               <file>java-import-order.txt</file>
             </importOrder>
@@ -312,7 +313,7 @@
                         <artifactId>maven-invoker-plugin</artifactId>
                       </plugin>
                       <goal>verify</goal>
-                      <configuration />
+                      <configuration/>
                     </pluginExecutor>
                   </pluginExecutors>
                 </configuration>
