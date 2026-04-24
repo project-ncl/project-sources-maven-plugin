@@ -70,7 +70,7 @@
     <javaTestVersion>${javaVersion}</javaTestVersion>
 
     <jdk.min.version>8</jdk.min.version>
-    <mavenVersion>3.9.14</mavenVersion>
+    <mavenVersion>3.9.15</mavenVersion>
     <it.maven.home>${project.build.directory}/apache-maven-</it.maven.home>
     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
   </properties>
