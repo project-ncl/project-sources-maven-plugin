@@ -75,6 +75,7 @@
     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
 
     <releaseProfiles>central-release</releaseProfiles>
+    <central.serverId>central-publishing</central.serverId>
   </properties>
 
   <dependencyManagement>
