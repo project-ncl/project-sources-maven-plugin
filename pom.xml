@@ -73,6 +73,8 @@
     <mavenVersion>3.9.15</mavenVersion>
     <it.maven.home>${project.build.directory}/apache-maven-</it.maven.home>
     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+
+    <releaseProfiles>central-release</releaseProfiles>
   </properties>
 
   <dependencyManagement>
