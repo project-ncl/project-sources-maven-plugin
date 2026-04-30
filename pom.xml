@@ -74,8 +74,7 @@
     <it.maven.home>${project.build.directory}/apache-maven-</it.maven.home>
     <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
 
-    <releaseProfiles>central-release</releaseProfiles>
-    <central.serverId>central-publisher</central.serverId>
+    <tagNameFormat>@{project.artifactId}-@{project.version}</tagNameFormat>
   </properties>
 
   <dependencyManagement>
@@ -172,7 +171,7 @@
             </sortPom>
           </pom>
           <java>
-            <removeUnusedImports />
+            <removeUnusedImports/>
             <importOrder>
               <file>java-import-order.txt</file>
             </importOrder>
@@ -316,7 +315,7 @@
                         <artifactId>maven-invoker-plugin</artifactId>
                       </plugin>
                       <goal>verify</goal>
-                      <configuration />
+                      <configuration/>
                     </pluginExecutor>
                   </pluginExecutors>
                 </configuration>
