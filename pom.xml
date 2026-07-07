@@ -102,7 +102,10 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.8.0</version>
       </dependency>
-      <!-- Following two override vulnerable dependencies from maven-assembly-plugin -->
+      <!--
+        Following three override vulnerable dependencies from maven-assembly-plugin
+        TODO: Remove overrides once maven-assembly-plugin is upgraded
+      -->
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
@@ -112,6 +115,11 @@
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-utils</artifactId>
         <version>4.0.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-archiver</artifactId>
+        <version>4.12.0</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>

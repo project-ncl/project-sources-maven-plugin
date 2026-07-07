@@ -29,6 +29,7 @@ jobs:
       project_name: 'project-ncl/project-sources-maven-plugin'
       SCA: true
       SAST: true
+      SCA_EXCLUDES: 'src/it/**'
     secrets:
       MEND_URL: ${{ secrets.MEND_URL }}
       MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
