@@ -68,6 +68,7 @@
     <projectOwner>Red Hat, Inc.</projectOwner>
     <javaVersion>1.8</javaVersion>
     <javaTestVersion>${javaVersion}</javaTestVersion>
+    <maven.compiler.release>8</maven.compiler.release>
 
     <jdk.min.version>8</jdk.min.version>
     <mavenVersion>3.9.16</mavenVersion>
