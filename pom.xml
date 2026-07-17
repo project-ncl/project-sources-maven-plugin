@@ -27,7 +27,7 @@
 
   <groupId>org.jboss.pnc</groupId>
   <artifactId>project-sources-maven-plugin</artifactId>
-  <version>2.3-SNAPSHOT</version>
+  <version>2.3</version>
   <packaging>maven-plugin</packaging>
 
   <name>Project Sources Maven Plugin</name>
@@ -60,7 +60,7 @@
   <scm>
     <connection>scm:git:https://github.com/project-ncl/project-sources-maven-plugin.git</connection>
     <developerConnection>scm:git:git@github.com:project-ncl/project-sources-maven-plugin.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>project-sources-maven-plugin-2.3</tag>
     <url>https://github.com/project-ncl/project-sources-maven-plugin</url>
   </scm>
 
